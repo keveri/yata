@@ -1,7 +1,14 @@
-let component = ReasonReact.statelessComponent("Page");
+let component = ReasonReact.statelessComponent("YATA");
 
-let make = (~content, _children) => {
+let make = (~title, _children) => {
   ...component,
   render: self =>
-      (ReasonReact.stringToElement(content))
+    <div className="app">
+      <div className="title">
+        (ReasonReact.stringToElement(title))
+      </div>
+      <div className="items">
+        (ReasonReact.stringToElement("Empty"))
+      </div>
+    </div>,
 };
