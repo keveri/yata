@@ -3,12 +3,12 @@ let component = ReasonReact.statelessComponent("YATA");
 let make = (~title, _children) => {
   ...component,
   render: self =>
-    <div className="app">
-      <div className="title">
-        (ReasonReact.stringToElement(title))
-      </div>
-      <div className="items">
-        (ReasonReact.stringToElement("Empty"))
-      </div>
-    </div>,
+    <MaterialUI.AppBar position="static" color="default">
+      <MaterialUI.Toolbar>
+        <MaterialUI.Typography
+          _type="title" color=MaterialUI.Typography.Color.Inherit>
+          (ReasonReact.stringToElement(title))
+        </MaterialUI.Typography>
+      </MaterialUI.Toolbar>
+    </MaterialUI.AppBar>
 };
