@@ -1,4 +1,4 @@
-let component = ReasonReact.statelessComponent("YATA");
+let component = ReasonReact.statelessComponent("Header");
 
 let make = (~title, _children) => {
   ...component,
