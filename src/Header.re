@@ -2,7 +2,7 @@ let component = ReasonReact.statelessComponent("Header");
 
 let make = (~title, _children) => {
   ...component,
-  render: self =>
+  render: _self =>
     <MaterialUI.AppBar position="static" color="default">
       <MaterialUI.Toolbar>
         <MaterialUI.Typography

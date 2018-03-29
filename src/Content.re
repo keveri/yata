@@ -1,4 +1,15 @@
-let component = ReasonReact.statelessComponent("Content");
+type item = {
+  title: string,
+  completed: bool
+};
+
+type state = {
+  items: list(item)
+};
+
+let component = ReasonReact.reducerComponent("Content");
+
+let str = ReasonReact.stringToElement;
 
 let contentPageStyle = ReactDOMRe.Style.make(
   ~textAlign="center",
@@ -11,8 +22,16 @@ let contentPageStyle = ReactDOMRe.Style.make(
 
 let make = _children => {
   ...component,
-  render: _self =>
+  initialState: () => {
+    items: [
+      {title: "Do this thing", completed: false}
+    ]
+  },
+  reducer: ((), _) => ReasonReact.NoUpdate,
+  render: ({state: {items}}) => {
+    let nItems = List.length(items);
     <MaterialUI.Paper style=contentPageStyle>
-      (ReasonReact.stringToElement("Content will be here!"))
+      (str(string_of_int(nItems) ++ " thing(s) todo"))
     </MaterialUI.Paper>
+  }
 };
