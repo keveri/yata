@@ -1,10 +1,5 @@
-type item = {
-  title: string,
-  completed: bool
-};
-
 type state = {
-  items: list(item)
+  items: list(Item.item)
 };
 
 type action =
@@ -12,9 +7,7 @@ type action =
 
 let component = ReasonReact.reducerComponent("Content");
 
-let newItem = () => {title: "New item", completed: false};
-
-let str = ReasonReact.stringToElement;
+let newItem = () : Item.item => {title: "New item", completed: false};
 
 
 let contentPageStyle = ReactDOMRe.Style.make(
@@ -22,7 +15,6 @@ let contentPageStyle = ReactDOMRe.Style.make(
   ~display="inline-block",
   ~marginTop="1em",
   ~width="100%",
-  ~height="4em",
   ()
 );
 
@@ -41,10 +33,19 @@ let make = _children => {
     let nItems = List.length(items);
     <div>
       <MaterialUI.Button onClick=(reduce((_evt) => AddItem))>
-        (str("Add new todo"))
+        (Helpers.str("Add new todo"))
       </MaterialUI.Button>
       <MaterialUI.Paper style=contentPageStyle>
-        (str(string_of_int(nItems) ++ " thing(s) todo"))
+        <div className="count">
+          (Helpers.str(string_of_int(nItems) ++ " thing(s) todo"))
+        </div>
+        <div className="items">
+          (
+            List.map((item) => <Item item/>, items)
+            |> Array.of_list
+            |> ReasonReact.arrayToElement
+          )
+        </div>
       </MaterialUI.Paper>
     </div>
   }
