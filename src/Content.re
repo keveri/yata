@@ -7,9 +7,15 @@ type state = {
   items: list(item)
 };
 
+type action =
+  | AddItem;
+
 let component = ReasonReact.reducerComponent("Content");
 
+let newItem = () => {title: "New item", completed: false};
+
 let str = ReasonReact.stringToElement;
+
 
 let contentPageStyle = ReactDOMRe.Style.make(
   ~textAlign="center",
@@ -27,11 +33,19 @@ let make = _children => {
       {title: "Do this thing", completed: false}
     ]
   },
-  reducer: ((), _) => ReasonReact.NoUpdate,
-  render: ({state: {items}}) => {
+  reducer: (action, {items}) =>
+    switch(action) {
+      | AddItem => ReasonReact.Update({items: [newItem(), ...items]})
+    },
+  render: ({state: {items}, reduce}) => {
     let nItems = List.length(items);
-    <MaterialUI.Paper style=contentPageStyle>
-      (str(string_of_int(nItems) ++ " thing(s) todo"))
-    </MaterialUI.Paper>
+    <div>
+      <MaterialUI.Button onClick=(reduce((_evt) => AddItem))>
+        (str("Add new todo"))
+      </MaterialUI.Button>
+      <MaterialUI.Paper style=contentPageStyle>
+        (str(string_of_int(nItems) ++ " thing(s) todo"))
+      </MaterialUI.Paper>
+    </div>
   }
 };
